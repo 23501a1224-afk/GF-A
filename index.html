@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Girls Fashion Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Girls <span>Fashion</span></div>
+    <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
+    <div class="cart-icon" onclick="toggleCart()">
+        🛒 Cart (<span id="cart-count">0</span>)
+    </div>
+</header>
+
+<nav>
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('bangle')">Bangle</button>
+    <button onclick="filterCategory('bracelet')">Bracelet</button>
+    <button onclick="filterCategory('chain')">Chain</button>
+    <button onclick="filterCategory('earring')">Earring</button>
+    <button onclick="filterCategory('ring')">Ring</button>
+    <button onclick="filterCategory('ethnic')">Ethnic</button>
+    <button onclick="filterCategory('western')">Western</button>
+    <button onclick="filterCategory('makeup')">Makeup</button>
+    <button onclick="filterCategory('skincare')">Skincare</button>
+    <button onclick="filterCategory('footwear')">Footwear</button>
+</nav>
+
+<div id="products" class="products"></div>
+
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar" class="cart-sidebar">
+
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="close-btn" onclick="toggleCart()">✖</button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <h3>Total: ₹<span id="cart-total">0</span></h3>
+
+    <button onclick="checkout()">Checkout</button>
+
+    <!-- PAYMENT SECTION -->
+    <div id="payment-section" class="payment-section">
+
+        <h3>Customer Details</h3>
+
+        <input type="text" id="cust-name" placeholder="Full Name">
+        <input type="text" id="cust-address" placeholder="Full Address">
+        <input type="text" id="cust-phone" placeholder="Phone Number">
+
+        <h3>Scan & Pay</h3>
+
+        <img src="images/scanner.jpg" alt="Payment QR">
+
+        <p><b>Total Amount: ₹<span id="final-amount"></span></b></p>
+
+        <p>After payment, click Done</p>
+
+        <button onclick="finishPayment()">Done</button>
+
+        <hr>
+
+        <p><b>Helpline:</b> 1234567890</p>
+        <p><b>Email:</b> girlsaccessories@gmail.com</p>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
