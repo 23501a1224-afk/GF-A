@@ -5,32 +5,36 @@ pipeline {
 
         stage('Pull Code') {
             steps {
-                echo "Pulling the code from GitHub..."
+                echo "Fetching code from GitHub..."
                 checkout scm
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Prepare Build') {
             steps {
-                script {
-                    dockerImage = docker.build("girls-accessories-app:latest")
-                }
+                echo "Preparing application files..."
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy Application') {
             steps {
-                script {
-                    sh 'docker rm -f girls-accessories || true'
-                    sh 'docker run -d -p 8080:80 --name girls-accessories girls-accessories-app:latest'
-                }
+                bat '''
+                mkdir C:\\deploy-app || exit 0
+                xcopy /E /I /Y * C:\\deploy-app
+                '''
+            }
+        }
+
+        stage('Archive Files') {
+            steps {
+                archiveArtifacts artifacts: '**/*', fingerprint: true
             }
         }
     }
 
     post {
         success {
-            echo "Deployment Completed Successfully!"
+            echo "Application Deployed Successfully!"
         }
         failure {
             echo "Deployment Failed!"
