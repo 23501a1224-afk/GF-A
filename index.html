@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">  <!-- ✅ FIXED encoding issue -->
     <title>Girls Fashion Store</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -8,7 +9,9 @@
 
 <header>
     <div class="logo">Girls <span>Fashion</span></div>
+
     <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
+
     <div class="cart-icon" onclick="toggleCart()">
         🛒 Cart (<span id="cart-count">0</span>)
     </div>
@@ -73,5 +76,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
