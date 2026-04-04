@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Pull Code') {
             steps {
                 echo "Fetching code from GitHub..."
@@ -16,10 +15,19 @@ pipeline {
             }
         }
 
+        // --- NEW TESTING STAGE ---
+        stage('Run Tests') {
+            steps {
+                echo "Running Automated Test Cases..."
+                // Executes the Python unittest and displays the output in Jenkins console
+                bat 'python run_tests.py'
+            }
+        }
+
         stage('Deploy Application') {
             steps {
                 bat '''
-                mkdir C:\\deploy-app || exit 0
+                if not exist "C:\\deploy-app" mkdir C:\\deploy-app
                 xcopy /E /I /Y * C:\\deploy-app
                 '''
             }
