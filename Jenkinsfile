@@ -1,43 +1,43 @@
 pipeline {
-    agent any
+    agent any
 
-    stages {
+    stages {
+        stage('Pull Code') {
+            steps {
+                echo "Fetching code from GitHub..."
+                checkout scm
+            }
+        }
 
-        stage('Pull Code') {
-            steps {
-                echo "Fetching code from GitHub..."
-                checkout scm
-            }
-        }
+        stage('Prepare Build') {
+            steps {
+                echo "Preparing application files..."
+            }
+        }
 
-        stage('Prepare Build') {
-            steps {
-                echo "Preparing application files..."
-            }
-        }
+        stage('Deploy Application') {
+            steps {
+                // Using 'if not exist' is safer for Windows BAT scripts in Jenkins
+                bat '''
+                if not exist "C:\\deploy-app" mkdir C:\\deploy-app
+                xcopy /E /I /Y * C:\\deploy-app
+                '''
+            }
+        }
 
-        stage('Deploy Application') {
-            steps {
-                bat '''
-                mkdir C:\\deploy-app || exit 0
-                xcopy /E /I /Y * C:\\deploy-app
-                '''
-            }
-        }
+        stage('Archive Files') {
+            steps {
+                archiveArtifacts artifacts: '**/*', fingerprint: true
+            }
+        }
+    }
 
-        stage('Archive Files') {
-            steps {
-                archiveArtifacts artifacts: '**/*', fingerprint: true
-            }
-        }
-    }
-
-    post {
-        success {
-            echo "Application Deployed Successfully!"
-        }
-        failure {
-            echo "Deployment Failed!"
-        }
-    }
+    post {
+        success {
+            echo "Application Deployed Successfully!"
+        }
+        failure {
+            echo "Deployment Failed!"
+        }
+    }
 }
